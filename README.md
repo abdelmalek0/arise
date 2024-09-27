@@ -1,13 +1,17 @@
-# Python project initializer
+# Python Project Initializer
 
-[x]. TUI to choose: 
-    - python version (between the ones existing)
-    - app name
-    - app description [Optional]
-    - github private/public
-[x]. create a poetry app
-[x]. init git and commit first changes
-[x]. create a github repo and push the files
+## Features
 
-### Future improvments
-- Create a stack of libraries.
+- [x] TUI to choose:
+  - Python version (between the existing versions)
+  - App name
+  - App description (Optional)
+  - GitHub repository visibility (Private/Public)
+- [x] Create a Poetry application
+- [x] Initialize Git and commit first changes
+- [x] Create a GitHub repository and push the files
+
+## Future Improvements
+
+- Fix Python version change
+- Create a stack of libraries
