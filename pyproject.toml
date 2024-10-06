@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "python-project-init"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["abdelmalek0 <djamaa.abdelmalek98@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "~3.11"
+python = "^3.8"
 pygithub = "^2.4.0"
 python-dotenv = "^1.0.1"
 icecream = "^2.1.3"

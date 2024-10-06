@@ -1,5 +1,6 @@
 import os
 import subprocess
+from icecream import ic
 
 
 def run_command(command):
@@ -19,7 +20,7 @@ def run_command(command):
         return output, error
 
 
-def change_directory(path: str):
+def change_directory(path: str) -> None:
     try:
         os.chdir(path)
     except OSError as e:

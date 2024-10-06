@@ -22,7 +22,7 @@ if __name__ == "__main__":
     project = dict()
 
     console.print(
-        Markdown("# Welcome To Python Project Initializer\n**Project Setup**")
+        Markdown("# Welcome To Python Project Initializer\n### Project Setup")
     )
 
     # Get the name of the project
@@ -46,13 +46,18 @@ if __name__ == "__main__":
     console.print(list(zip(*python_versions))[0][python_index])
     project["python"] = python_versions[python_index]
 
+    # Get the Path of the project
+    console.print("path: ", style=text_color, end="")
+    project["path"] = os.path.abspath(input())
+    # Choose the directory of projects
+    change_directory(
+        os.path.expanduser("~") if not project["path"] else project["path"]
+    )
+
     progress = Progress()
     progress.start()
 
-    console.print(Markdown("\n\n\n**Project Creation**"))
-
-    # Choose the directory of projects
-    change_directory(os.path.expanduser("~"))
+    console.print(Markdown("\n\n\n### Project Creation"))
 
     # Create a poetry project
     create_poetry_project(progress, project)

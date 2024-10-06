@@ -19,7 +19,7 @@ def get_python_versions():
                 ["where", "python"], stderr=subprocess.STDOUT
             ).decode()
 
-            print(output)
+            # print(output)
             # Extract Python versions from the output (e.g., Python38, Python312)
             version_matches = re.findall(r"Python(\d+)", output)
             version_paths = [
@@ -28,7 +28,7 @@ def get_python_versions():
                 for version in version_matches
                 if version in path
             ]
-            print(version_paths)
+            # print(version_paths)
             # Format the versions to include the full version (e.g., 3.8, 3.12)
             versions = [
                 ("3" + ".".join(version.split("3")), path)
@@ -85,6 +85,10 @@ def create_poetry_project(progress: Progress, project: dict):
     # Cd to the poetry project
     change_directory(project["name"])
 
+    _, error = run_command(f"poetry env use {project['python'][1]}")
+    if error:
+        print(f"Error Using this python version: {error}")
+        exit(1)
     # Update poetry lock file
     _, error = run_command(f"{project['python'][1]} -m poetry update")
     if error:
