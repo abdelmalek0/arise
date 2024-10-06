@@ -5,7 +5,8 @@ import subprocess
 import toml
 from rich.progress import Progress
 
-from utils import run_command, change_directory
+from python_project_init.utils import run_command
+from python_project_init.utils import change_directory
 
 
 def get_python_versions():

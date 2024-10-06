@@ -6,9 +6,9 @@ from rich.markdown import Markdown
 from rich.progress import Progress
 from simple_term_menu import TerminalMenu
 
-from utils import change_directory
-from poetry_utils import get_python_versions, create_poetry_project
-from github_utils import init_git, push_to_github
+from python_project_init.utils import change_directory
+from python_project_init.poetry_utils import get_python_versions, create_poetry_project
+from python_project_init.github_utils import init_git, push_to_github
 
 load_dotenv()
 
@@ -18,7 +18,7 @@ python_versions = get_python_versions()
 text_color = "#6ab0de"
 
 
-if __name__ == "__main__":
+def main():
     project = dict()
 
     console.print(
@@ -68,3 +68,7 @@ if __name__ == "__main__":
     push_to_github(progress, project)
 
     progress.stop()
+
+
+if __name__ == "__main__":
+    main()

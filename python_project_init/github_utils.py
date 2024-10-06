@@ -5,14 +5,13 @@ from github import Github
 from github import Auth
 from rich.progress import Progress
 
-from utils import run_command
+from python_project_init.utils import run_command
 
 load_dotenv()
-auth = Auth.Token(os.getenv("GITHUB_ACCESS_TOKEN"))
 
 
 def create_github_repo(name: str, description: str = "", private: bool = False):
-    github_client = Github(auth=auth)
+    github_client = Github(auth=Auth.Token(os.getenv("GITHUB_ACCESS_TOKEN")))
     try:
         github_client.get_user().create_repo(
             name=name, description=description, private=private
