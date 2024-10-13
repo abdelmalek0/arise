@@ -7,11 +7,20 @@ from rich.progress import Progress
 
 from python_project_init.utils import run_command
 
-load_dotenv()
+# Get the directory where the current script is located
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Define the full path to the .env file
+dotenv_path = os.path.join(base_dir, ".env")
+
+# Load the environment variables from the .env file
+load_dotenv(dotenv_path=dotenv_path)
+
+GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
 
 
 def create_github_repo(name: str, description: str = "", private: bool = False):
-    github_client = Github(auth=Auth.Token(os.getenv("GITHUB_ACCESS_TOKEN")))
+    github_client = Github(auth=Auth.Token(GITHUB_ACCESS_TOKEN))
     try:
         github_client.get_user().create_repo(
             name=name, description=description, private=private

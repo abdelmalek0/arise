@@ -98,7 +98,7 @@ def create_poetry_project(progress: Progress, project: dict):
     progress.update(task, advance=25.0)
 
     # Create virtual env
-    _, error = run_command(f"{project['python'][1]} -m poetry shell")
+    _, error = run_command(f"{project['python'][1]} -m poetry install")
     if error:
         print(f"Error creating virtual environment: {error}")
         exit(1)
