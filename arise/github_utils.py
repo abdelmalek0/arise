@@ -5,22 +5,33 @@ from github import Github
 from github import Auth
 from rich.progress import Progress
 
-from python_project_init.utils import run_command
+from arise.utils import run_command
+from arise.config import ENV_FOLDER
 
-# Get the directory where the current script is located
-base_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Define the full path to the .env file
-dotenv_path = os.path.join(base_dir, ".env")
+load_dotenv(dotenv_path=os.path.join(ENV_FOLDER, ".env"))
 
-# Load the environment variables from the .env file
-load_dotenv(dotenv_path=dotenv_path)
 
-GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
+def save_github_credentials(credentials: dict):
+    try:
+        # Check if the folder exists, create it if it doesn't
+        os.makedirs(ENV_FOLDER, exist_ok=True)
+
+        # Define the file path where the credentials will be saved
+        file_path = os.path.join(ENV_FOLDER, ".env")
+
+        # Write the credentials to the .env file
+        with open(file_path, "w") as f:
+            for key, value in credentials.items():
+                f.write(f"{key}={value}\n")
+
+        return True
+    except Exception as _:
+        return False
 
 
 def create_github_repo(name: str, description: str = "", private: bool = False):
-    github_client = Github(auth=Auth.Token(GITHUB_ACCESS_TOKEN))
+    github_client = Github(auth=Auth.Token(os.getenv("GITHUB_ACCESS_TOKEN")))
     try:
         github_client.get_user().create_repo(
             name=name, description=description, private=private

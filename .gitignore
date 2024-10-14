@@ -1,5 +1,8 @@
 **/.env
-**/__pycache__/**
+**/__pycache__/
 **/*.pyc
 **/.vscode
 **/.idea
+
+# Ignore the dist directory
+dist/

@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "python-project-init"
-version = "0.1.1"
-description = ""
+name = "arise"
+version = "0.1.2"
+description = "A Python project initializer designed to streamline the setup process for new Python projects. Arise simplifies the creation of project structures, dependency management, and configuration, allowing developers to focus on writing code. Whether you’re starting a new application, library, or script, Arise helps you get up and running quickly with a solid foundation."
 authors = ["abdelmalek0 <djamaa.abdelmalek98@gmail.com>"]
 readme = "README.md"
 
@@ -15,7 +15,7 @@ simple-term-menu = "^1.6.4"
 toml = "^0.10.2"
 
 [tool.poetry.scripts]
-arise = "python_project_init.main:main"
+arise = "arise.main:main"
 
 [build-system]
 requires = ["poetry-core"]

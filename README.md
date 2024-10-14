@@ -1,4 +1,4 @@
-# Python Project Initializer
+# Arise
 
 ## Features
 
@@ -10,8 +10,9 @@
 - [x] Create a Poetry application
 - [x] Initialize Git and commit first changes
 - [x] Create a GitHub repository and push the files
+- [X] Fix Python version change
+- [X] Add Executable
 
 ## Future Improvements
 
-- Fix Python version change
 - Create a stack of libraries

@@ -5,8 +5,8 @@ import subprocess
 import toml
 from rich.progress import Progress
 
-from python_project_init.utils import run_command
-from python_project_init.utils import change_directory
+from arise.utils import run_command
+from arise.utils import change_directory
 
 
 def get_python_versions():
