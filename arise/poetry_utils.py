@@ -7,6 +7,7 @@ from rich.progress import Progress
 
 from arise.utils import run_command
 from arise.utils import change_directory
+from arise.config import logger
 
 
 def get_python_versions():
@@ -20,7 +21,7 @@ def get_python_versions():
                 ["where", "python"], stderr=subprocess.STDOUT
             ).decode()
 
-            # print(output)
+            logger.debug(output)
             # Extract Python versions from the output (e.g., Python38, Python312)
             version_matches = re.findall(r"Python(\d+)", output)
             version_paths = [
@@ -29,7 +30,7 @@ def get_python_versions():
                 for version in version_matches
                 if version in path
             ]
-            # print(version_paths)
+            logger.debug(version_paths)
             # Format the versions to include the full version (e.g., 3.8, 3.12)
             versions = [
                 ("3" + ".".join(version.split("3")), path)
@@ -37,7 +38,7 @@ def get_python_versions():
             ]
 
         except subprocess.CalledProcessError as e:
-            print("Error listing Python versions:", e.output.decode())
+            logger.error("Error listing Python versions:", e.output.decode())
             return []
 
     else:  # Linux/macOS/WSL
@@ -66,7 +67,7 @@ def create_poetry_project(progress: Progress, project: dict):
     # Create a new poetry project
     _, error = run_command(f"{project['python'][1]} -m poetry new {project['name']}")
     if error:
-        print(f"Error creating poetry project: {error}")
+        logger.error(f"Error creating poetry project: {error}")
         exit(1)
     progress.update(task, advance=25.0)
 
@@ -88,18 +89,18 @@ def create_poetry_project(progress: Progress, project: dict):
 
     _, error = run_command(f"poetry env use {project['python'][1]}")
     if error:
-        print(f"Error Using this python version: {error}")
+        logger.error(f"Error Using this python version: {error}")
         exit(1)
     # Update poetry lock file
     _, error = run_command(f"{project['python'][1]} -m poetry update")
     if error:
-        print(f"Error updating poetry lock file: {error}")
+        logger.error(f"Error updating poetry lock file: {error}")
         exit(1)
     progress.update(task, advance=25.0)
 
     # Create virtual env
     _, error = run_command(f"{project['python'][1]} -m poetry install")
     if error:
-        print(f"Error creating virtual environment: {error}")
+        logger.error(f"Error creating virtual environment: {error}")
         exit(1)
     progress.update(task, advance=25.0)

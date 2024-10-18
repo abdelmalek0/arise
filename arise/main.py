@@ -11,6 +11,7 @@ from arise.utils import change_directory
 from arise.poetry_utils import get_python_versions, create_poetry_project
 from arise import github_utils
 from arise.config import ENV_FOLDER
+from arise.config import logger
 
 
 console = Console()
@@ -45,6 +46,7 @@ def run():
     console.print(Markdown("# **Welcome To Arise**", style=COLORS["primary"]))
     if not os.getenv("GITHUB_ACCESS_TOKEN") or not os.getenv("GITHUB_USERNAME"):
         console.print(Markdown("**You must set up your GitHub credentials first.**"))
+        logger.warning("GitHub credentials are not set up")
         exit()
 
     console.print(Markdown("### Project Setup", style=COLORS["secondary"]))
@@ -117,14 +119,17 @@ def login():
         "GITHUB_USERNAME"
     ):
         console.print("Error: ", end="", style=COLORS["failure"])
-        print("Missing GitHub credentials.")
+        console.print("Missing GitHub credentials.")
+        logger.warning("GitHub credentials are not set up")
     else:
         if not github_utils.save_github_credentials(credentials):
             console.print("Error: ", end="", style="#8B0000")
-            print("Saving credentials went wrong.")
+            console.print("Saving credentials went wrong.")
+            logger.error("Saving credentials went wrong.")
 
         console.print("Success: ", end="", style=COLORS["success"])
-        print("Credentials saved.")
+        console.print("Credentials saved.")
+        logger.info("Credentials saved.")
 
 
 if __name__ == "__main__":

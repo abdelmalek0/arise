@@ -6,7 +6,7 @@ from github import Auth
 from rich.progress import Progress
 
 from arise.utils import run_command
-from arise.config import ENV_FOLDER
+from arise.config import ENV_FOLDER, logger
 
 
 load_dotenv(dotenv_path=os.path.join(ENV_FOLDER, ".env"))
@@ -37,7 +37,7 @@ def create_github_repo(name: str, description: str = "", private: bool = False):
             name=name, description=description, private=private
         )
     except Exception as e:
-        print(f"Failed to create a repo with that name due to:\n{e}")
+        logger.error(f"Failed to create a repo with that name due to:\n{e}")
     github_client.close()
 
 
@@ -47,7 +47,7 @@ def init_git(progress: Progress):
     # Initialize Git repository
     output, error = run_command("git init")
     if error:
-        print(f"Error initializing Git repository: {error}")
+        logger.error(f"Error initializing Git repository: {error}")
         return
     progress.update(task, advance=25.0)
 
@@ -59,7 +59,7 @@ def init_git(progress: Progress):
     # Add all files to staging area
     output, error = run_command("git add .")
     if error:
-        print(f"Error adding files to staging area: {error}")
+        logger.error(f"Error adding files to staging area: {error}")
         return
     progress.update(task, advance=25.0)
 
@@ -67,7 +67,7 @@ def init_git(progress: Progress):
     output, error = run_command('git commit -m "Initial commit"')
 
     if error:
-        print(f"Error committing changes: {error}")
+        logger.error(f"Error committing changes: {error}")
         return
     progress.update(task, advance=25.0)
 
@@ -82,7 +82,7 @@ def push_to_github(progress: Progress, project: dict):
     # Renaming current branch to main
     output, error = run_command("git branch -M main")
     if error:
-        print(f"Error renaming current branch: {error}")
+        logger.error(f"Error renaming current branch: {error}")
         return
     progress.update(task, advance=10.0)
 
@@ -91,13 +91,13 @@ def push_to_github(progress: Progress, project: dict):
         f"git remote add origin https://github.com/{os.getenv('GITHUB_USERNAME')}/{project['name']}.git"
     )
     if error:
-        print(f"Error adding remote repo to local git: {error}")
+        logger.error(f"Error adding remote repo to local git: {error}")
         return
     progress.update(task, advance=10.0)
 
     # Push changes to Github
     output, error = run_command("git push -u origin main")
     if error:
-        print(f"Error pushing changes to github: {error}")
+        logger.error(f"Error pushing changes to github: {error}")
         return
     progress.update(task, advance=30.0)
